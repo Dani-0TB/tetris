@@ -41,3 +41,12 @@ class Tetramino:
                     piece_surf.fill(colors[self.color])
                     screen.blit(piece_surf,piece_rect)
                 counter += 1
+
+    def set(self,stack):
+        counter = 0
+        for cell_y in range(4):
+            for cell_x in range(4):
+                if counter in self.shapes:
+                    game_stack[self.y+cell_y][self.x+cell_x]=True
+                    color_stack[self.y+cell_y][self.x+cell_x]=self.color
+                counter += 1

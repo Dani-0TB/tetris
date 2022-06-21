@@ -9,7 +9,7 @@ def main():
 
     screen = pygame.display.set_mode(screen_size)
 
-    FPS = 60
+    FPS = 30
     clock = pygame.time.Clock()
 
 
@@ -29,6 +29,8 @@ def main():
                     current_piece.y+=1
                 if event.key == pygame.K_r:
                     current_piece = Tetramino(3,0)
+                if event.key == pygame.K_s:
+                    current_piece.set(game_stack)
 
         if current_piece.move_timer < 60:
             current_piece.move_timer+=1
@@ -41,7 +43,7 @@ def main():
         pygame.display.update()
         clock.tick(FPS)
 
-    
+
 
 def draw_field(screen, current_piece):
     # Copy the current stack into a temp stack

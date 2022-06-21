@@ -45,4 +45,4 @@ color_stack=[
 
 tile_size = 32
 screen_size = width, height = tile_size*10, tile_size*20
-border = 3
+border = 4
