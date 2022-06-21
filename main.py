@@ -9,7 +9,7 @@ def main():
 
     screen = pygame.display.set_mode(screen_size)
 
-    FPS = 30
+    FPS = 60
     clock = pygame.time.Clock()
 
 
@@ -22,21 +22,35 @@ def main():
                 exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
-                    current_piece.x-=1
+                    if not current_piece.collide(3):
+                        current_piece.x-=1
                 if event.key == pygame.K_RIGHT:
-                    current_piece.x+=1
+                    if not current_piece.collide(1):
+                        current_piece.x+=1
                 if event.key == pygame.K_DOWN:
-                    current_piece.y+=1
+                    if current_piece.collide(2):
+                        current_piece.set()
+                        current_piece=Tetramino(4,0)
+                    else:
+                        current_piece.y+=1
                 if event.key == pygame.K_r:
                     current_piece = Tetramino(3,0)
                 if event.key == pygame.K_s:
                     current_piece.set(game_stack)
+                if event.key == pygame.K_z:
+                    current_piece.rotate(1)
+                if event.key == pygame.K_x:
+                    current_piece.rotate(2)
 
         if current_piece.move_timer < 60:
             current_piece.move_timer+=1
         else:
             current_piece.move_timer=0
-            current_piece.y+=1
+            if current_piece.collide(2):
+                current_piece.set()
+                current_piece=Tetramino(4,0)
+            else:
+                current_piece.y+=1
 
         draw_field(screen, current_piece)
 
