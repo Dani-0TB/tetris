@@ -2,6 +2,7 @@ import pygame
 from settings import *
 from sys import exit
 from tetramino import *
+from os import system
 
 def main():
 
@@ -12,8 +13,10 @@ def main():
     FPS = 60
     clock = pygame.time.Clock()
 
+    
 
-    current_piece = Tetramino(3,0)
+    current_piece = Tetramino(3,1)
+
 
     while True:
         for event in pygame.event.get():
@@ -21,39 +24,53 @@ def main():
                 pygame.quit()
                 exit()
             if event.type == pygame.KEYDOWN:
+
+                # Player Controller
                 if event.key == pygame.K_LEFT:
                     if not current_piece.collide(3):
                         current_piece.x-=1
                 if event.key == pygame.K_RIGHT:
                     if not current_piece.collide(1):
                         current_piece.x+=1
+                if event.key == pygame.K_UP:
+                    drop_piece(current_piece)
+                    current_piece.move_timer = 0
                 if event.key == pygame.K_DOWN:
                     if current_piece.collide(2):
                         pass
                     else:
                         current_piece.y+=1
-                if event.key == pygame.K_r:
-                    current_piece = Tetramino(3,0)
-                if event.key == pygame.K_s:
-                    current_piece.set()
                 if event.key == pygame.K_z:
                     current_piece.rotate(1)
                 if event.key == pygame.K_x:
                     current_piece.rotate(2)
+                
+                # Game settings controls
+                if event.key == pygame.K_r:
+                    current_piece = Tetramino(3,1)
+                
+                
 
                 if event.key == pygame.K_c:
                     clear_stack()
 
-        if current_piece.move_timer < 60:
+        if current_piece.move_timer < time:
             current_piece.move_timer+=1
         else:
             current_piece.move_timer=0
             if current_piece.collide(2):
                 current_piece.set()
-                current_piece=Tetramino(3,0)
+                current_piece=Tetramino(3,1)
             else:
                 current_piece.y+=1
 
+        for i in range(10):
+            if game_stack[4][i]:
+                clear_stack()
+                current_piece = Tetramino(3,1)
+        
+        check_lines()
+        
         draw_field(screen, current_piece)
 
         pygame.display.update()
@@ -82,6 +99,46 @@ def clear_stack():
         for x in range(10):
             game_stack[y][x] = False
             color_stack[y][x] = 0
+
+            
+def check_lines():
+    lines_to_clear = 0
+    index = 0
+    indices = []
+    clear = True
+    for row in game_stack:
+        for cell in row:
+            if not cell:
+                clear = False
+                continue
+        if clear:
+            lines_to_clear+=1
+            indices.append(index)    
+        index +=1
+        clear=True
+
+    if lines_to_clear > 0:
+        clear_lines(indices)
+
+def clear_lines(indices):
+    for y in indices:
+        for x in range(len(game_stack[y])):
+            game_stack[y][x] = False
+            color_stack[y][x] = 0
+        
+        for y_index in range(y+1):
+            row = y - y_index
+            for x in range(10):
+                if y > 0:
+                    game_stack[row][x] = game_stack[row-1][x]
+                    color_stack[row][x] = color_stack[row-1][x]
+        
+            
+    
+def drop_piece(piece):
+    for i in range(20):
+        if not piece.collide(2):
+            piece.y+=1
 
 
 if __name__ == "__main__":
