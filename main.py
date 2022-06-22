@@ -36,11 +36,14 @@ def main():
                 if event.key == pygame.K_r:
                     current_piece = Tetramino(3,0)
                 if event.key == pygame.K_s:
-                    current_piece.set(game_stack)
+                    current_piece.set()
                 if event.key == pygame.K_z:
                     current_piece.rotate(1)
                 if event.key == pygame.K_x:
                     current_piece.rotate(2)
+
+                if event.key == pygame.K_c:
+                    clear_stack()
 
         if current_piece.move_timer < 60:
             current_piece.move_timer+=1
@@ -73,6 +76,14 @@ def draw_field(screen, current_piece):
 
     # Draw current piece
     current_piece.draw(screen)
+
+
+def clear_stack():
+    for y in range(20):
+        for x in range(10):
+            game_stack[y][x] = False
+            color_stack[y][x] = 0
+
 
 if __name__ == "__main__":
     main()
