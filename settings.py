@@ -18,7 +18,13 @@ game_stack=[
     [False,False,False,False,False,False,False,False,False,False,],
     [False,False,False,False,False,False,False,False,False,False,],
     [False,False,False,False,False,False,False,False,False,False,],
-    [False,False,False,False,False,False,False,False,False,False,]]
+    [False,False,False,False,False,False,False,False,False,False,],
+    [False,False,False,False,False,False,False,False,False,False,],
+    [False,False,False,False,False,False,False,False,False,False,],
+    [False,False,False,False,False,False,False,False,False,False,],
+    [False,False,False,False,False,False,False,False,False,False,],
+    [False,False,False,False,False,False,False,False,False,False,]
+]
 
 color_stack=[
     [0,0,0,0,0,0,0,0,0,0],
@@ -41,6 +47,11 @@ color_stack=[
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0,0,0]
     ]
 
 tile_size = 32

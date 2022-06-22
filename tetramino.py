@@ -37,7 +37,7 @@ class Tetramino:
             for cell_x in range(4):
                 if counter in self.shapem:
                     piece_surf = pygame.surface.Surface((tile_size-border,tile_size-border))
-                    piece_rect = piece_surf.get_rect(topleft = ((self.x+cell_x)*tile_size, (self.y+cell_y)*tile_size))
+                    piece_rect = piece_surf.get_rect(topleft = ((self.x+cell_x)*tile_size, (self.y+cell_y-5)*tile_size))
                     piece_surf.fill(colors[self.color])
                     screen.blit(piece_surf,piece_rect)
                 counter += 1
@@ -57,7 +57,7 @@ class Tetramino:
             for cell_x in range(4):
                 if counter in self.shapem:
                     if dir == 2: #DOWN
-                        if (self.y+cell_y+1) >= 20:
+                        if (self.y+cell_y+1) >= 25:
                             return True
                         if game_stack[self.y+cell_y+1][cell_x+self.x]:
                             return True
@@ -77,30 +77,19 @@ class Tetramino:
                 counter+=1
     
     def rotate(self,dir):
-        if dir == 1:
-            if self.rotation == len(shapes[self.shape])-1:
-                self.rotation = 0
-            else:
-                self.rotation += 1
-        if dir == 2:
-            if self.rotation == 0:
-                self.rotation = len(shapes[self.shape])-1
-            else:
-                self.rotation -= 1
-        
-        self.shapem = shapes[self.shape][self.rotation]
-
-        if self.collide(3,True):
-            if self.shape == 6:
-                self.x+=2
-            else:
-                self.x+=1 
-        if self.collide(1,True):
-            if self.shape == 6:
-                self.x-=2
-            else:
-                self.x-=1 
-        
+        if not self.collide(3) and not self.collide(1):
+            if dir == 1:
+                if self.rotation == len(shapes[self.shape])-1:
+                    self.rotation = 0
+                else:
+                    self.rotation += 1
+            if dir == 2:
+                if self.rotation == 0:
+                    self.rotation = len(shapes[self.shape])-1
+                else:
+                    self.rotation -= 1
+            
+            self.shapem = shapes[self.shape][self.rotation]
         
             
             

@@ -13,7 +13,7 @@ def main():
     clock = pygame.time.Clock()
 
 
-    current_piece = Tetramino(3,-4)
+    current_piece = Tetramino(3,0)
 
     while True:
         for event in pygame.event.get():
@@ -29,8 +29,7 @@ def main():
                         current_piece.x+=1
                 if event.key == pygame.K_DOWN:
                     if current_piece.collide(2):
-                        current_piece.set()
-                        current_piece=Tetramino(4,0)
+                        pass
                     else:
                         current_piece.y+=1
                 if event.key == pygame.K_r:
@@ -51,7 +50,7 @@ def main():
             current_piece.move_timer=0
             if current_piece.collide(2):
                 current_piece.set()
-                current_piece=Tetramino(4,0)
+                current_piece=Tetramino(3,0)
             else:
                 current_piece.y+=1
 
@@ -67,19 +66,19 @@ def draw_field(screen, current_piece):
     draw_stack = game_stack
 
     # Draw stack
-    for stack_y in range(20):
+    for stack_y in range(25):
         for stack_x in range(10):
-            cell_surf = pygame.surface.Surface((tile_size-border, tile_size-border))
-            cell_rect = cell_surf.get_rect(topleft = (stack_x*tile_size,stack_y*tile_size))
-            cell_surf.fill(colors[color_stack[stack_y][stack_x]])
-            screen.blit(cell_surf,cell_rect)
+                cell_surf = pygame.surface.Surface((tile_size-border, tile_size-border))
+                cell_rect = cell_surf.get_rect(topleft = (stack_x*tile_size,(stack_y-5)*tile_size))
+                cell_surf.fill(colors[color_stack[stack_y][stack_x]])
+                screen.blit(cell_surf,cell_rect)
 
     # Draw current piece
     current_piece.draw(screen)
 
 
 def clear_stack():
-    for y in range(20):
+    for y in range(25):
         for x in range(10):
             game_stack[y][x] = False
             color_stack[y][x] = 0
