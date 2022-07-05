@@ -50,6 +50,12 @@ class Tetramino:
                     game_stack[self.y+cell_y][self.x+cell_x]=True
                     color_stack[self.y+cell_y][self.x+cell_x]=self.color
                 counter += 1
+        self.x = 3
+        self.y = 1
+        self.shape = randint(0,len(shapes)-1)
+        self.rotation = 0
+        self.shapem=shapes[self.shape][self.rotation]
+        self.color=self.shape+1
     
     def collide(self,dir,r=False):
         counter = 0

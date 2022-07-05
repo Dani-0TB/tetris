@@ -24,7 +24,6 @@ def main():
                 pygame.quit()
                 exit()
             if event.type == pygame.KEYDOWN:
-
                 # Player Controller
                 if event.key == pygame.K_LEFT:
                     if not current_piece.collide(3):
@@ -47,27 +46,31 @@ def main():
                 
                 # Game settings controls
                 if event.key == pygame.K_r:
-                    current_piece = Tetramino(3,1)
+                    current_piece.x = 3
+                    current_piece.y = 1
                 
                 
 
                 if event.key == pygame.K_c:
                     clear_stack()
-
+        
+        # Move timer
         if current_piece.move_timer < time:
             current_piece.move_timer+=1
         else:
             current_piece.move_timer=0
             if current_piece.collide(2):
                 current_piece.set()
-                current_piece=Tetramino(3,1)
             else:
                 current_piece.y+=1
 
+        ## Reset board if topped out.
         for i in range(10):
             if game_stack[4][i]:
                 clear_stack()
-                current_piece = Tetramino(3,1)
+                current_piece.x = 3
+                current_piece.y = 1
+                current_piece.shape = randint(0,7)
         
         check_lines()
         
@@ -121,17 +124,14 @@ def check_lines():
         clear_lines(indices)
 
 def clear_lines(indices):
-    for y in indices:
-        for x in range(len(game_stack[y])):
-            game_stack[y][x] = False
-            color_stack[y][x] = 0
-        
-        for y_index in range(y+1):
-            row = y - y_index
-            for x in range(10):
-                if y > 0:
-                    game_stack[row][x] = game_stack[row-1][x]
-                    color_stack[row][x] = color_stack[row-1][x]
+    for item in indices:
+        rows = range(1,item+1)
+        for row in rows[::-1]:
+            for cell in range(10):
+                game_stack[row][cell] = game_stack[row-1][cell]
+                color_stack[row][cell] = color_stack[row-1][cell]
+
+
         
             
     
